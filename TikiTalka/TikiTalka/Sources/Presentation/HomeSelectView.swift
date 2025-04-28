@@ -1,0 +1,24 @@
+//
+//  HomeSelectView.swift
+//  TikiTalka
+//
+//  Created by 신승재 on 4/27/25.
+//
+
+import SwiftUI
+
+struct HomeSelectView: View {
+  var body: some View {
+    VStack {
+      Image(systemName: "globe")
+        .imageScale(.large)
+        .foregroundStyle(.tint)
+      Text("Hello, world!")
+    }
+    .padding()
+  }
+}
+
+#Preview {
+  HomeSelectView()
+}
