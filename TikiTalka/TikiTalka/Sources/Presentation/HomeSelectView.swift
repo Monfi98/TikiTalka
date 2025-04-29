@@ -28,29 +28,10 @@ struct HomeSelectView: View {
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding(.leading, 24)
         
-        TabView(selection: $currentPersona) {
-          ForEach(PersonaType.allCases, id: \.self) {
-            VStack(spacing: 0) {
-              
-              Spacer()
-              
-              Text("\"\(currentPersona.catchphrase)\"")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.textWhite)
-                .font(.pretendard(size: 30, weight: .semiBold))
-              
-              Text(currentPersona.summary)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.textWhite)
-                .font(.pretendard(size: 16, weight: .light))
-                .padding(.vertical, 32)
-            }.tag($0)
-          }
-        }
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-        .frame(maxHeight: .infinity)
+        SlideContentView(currentPersona: $currentPersona)
         
-        SelectedIndicator(currentPersona: $currentPersona)
+        pageIndicator()
+          .padding(.bottom, 43)
         
         Button {
           print("tapped")
@@ -64,18 +45,11 @@ struct HomeSelectView: View {
         }
       }.padding(.bottom, 70)
       
-      
-      
     }.background(currentPersona.mainColor)
   }
-}
-
-
-// MARK: - SelectedIndicator
-struct SelectedIndicator: View {
-  @Binding var currentPersona: PersonaType
   
-  var body: some View {
+  @ViewBuilder
+  private func pageIndicator() -> some View {
     HStack {
       ForEach(PersonaType.allCases, id: \.self) {
         let size = $0 == currentPersona ? 8.0 : 6.0
@@ -83,7 +57,36 @@ struct SelectedIndicator: View {
           .fill($0 == currentPersona ? .textWhite : .buttonWhiteOpacity)
           .frame(width: size, height: size)
       }
-    }.padding(.bottom, 43)
+    }
+  }
+}
+
+struct SlideContentView: View {
+  
+  @Binding var currentPersona: PersonaType
+  
+  var body: some View {
+    TabView(selection: $currentPersona) {
+      ForEach(PersonaType.allCases, id: \.self) {
+        VStack(spacing: 0) {
+          
+          Spacer()
+          
+          Text("\"\(currentPersona.catchphrase)\"")
+            .multilineTextAlignment(.center)
+            .foregroundStyle(.textWhite)
+            .font(.pretendard(size: 30, weight: .semiBold))
+          
+          Text(currentPersona.summary)
+            .multilineTextAlignment(.center)
+            .foregroundStyle(.textWhite)
+            .font(.pretendard(size: 16, weight: .light))
+            .padding(.vertical, 32)
+        }.tag($0)
+      }
+    }
+    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+    .frame(maxHeight: .infinity)
   }
 }
 
