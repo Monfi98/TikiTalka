@@ -44,8 +44,9 @@ struct HomeSelectView: View {
             .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 8)
         }
       }.padding(.bottom, 70)
-      
-    }.background(currentPersona.mainColor)
+    }
+    .background(currentPersona.mainColor)
+    .animation(.easeInOut(duration: 0.25), value: currentPersona)
   }
   
   @ViewBuilder
@@ -70,8 +71,6 @@ struct SlideContentView: View {
       ForEach(PersonaType.allCases, id: \.self) {
         VStack(spacing: 0) {
           
-          Spacer()
-          
           Text("\"\(currentPersona.catchphrase)\"")
             .multilineTextAlignment(.center)
             .foregroundStyle(.textWhite)
@@ -82,11 +81,13 @@ struct SlideContentView: View {
             .foregroundStyle(.textWhite)
             .font(.pretendard(size: 16, weight: .light))
             .padding(.vertical, 32)
-        }.tag($0)
+          
+        }
+        .tag($0)
+        .frame(maxHeight: .infinity, alignment: .bottom)
       }
     }
     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-    .frame(maxHeight: .infinity)
   }
 }
 
