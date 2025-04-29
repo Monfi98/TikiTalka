@@ -11,7 +11,8 @@ import SwiftUI
 struct TikiTalkaApp: App {
     var body: some Scene {
         WindowGroup {
-          HomeSelectView()
+          //HomeSelectView()
+          ChatView()
         }
     }
 }

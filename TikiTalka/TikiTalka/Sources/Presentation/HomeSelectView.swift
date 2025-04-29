@@ -34,7 +34,7 @@ struct HomeSelectView: View {
           .padding(.bottom, 43)
         
         Button {
-          print("tapped")
+          
         } label: {
           Text("시작하기")
             .padding(.horizontal, 70)
