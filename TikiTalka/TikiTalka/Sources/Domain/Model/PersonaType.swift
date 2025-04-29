@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
 
-enum PersonaType {
+enum PersonaType: CaseIterable {
   case loyal     // 1. 충성형
   case nerd      // 2. 너드형
   case sarcastic // 3. 비꼬기형
@@ -51,6 +52,45 @@ extension PersonaType {
       "대놓고 비꼬지만 묘하게 팩폭 섞여 있음\n듣는 사람 빡치는데 도움이 되긴 함"
     case .bossy:
       "자꾸 옛날 이야기 꺼냄\n다 잔소리처럼 들리는데 어쩐지 틀린 말은 아님"
+    }
+  }
+  
+  var mainColor: Color {
+    switch self {
+    case .loyal:
+        .redPrimary
+    case .nerd:
+        .greenPrimary
+    case .sarcastic:
+        .bluePrimary
+    case .bossy:
+        .orangePrimary
+    }
+  }
+  
+  var faceImage: Image {
+    switch self {
+    case .loyal:
+      Image("LoyalFace")
+    case .nerd:
+      Image("NerdFace")
+    case .sarcastic:
+      Image("SarcasticFace")
+    case .bossy:
+      Image("BossyFace")
+    }
+  }
+  
+  var topPadding: CGFloat {
+    switch self {
+    case .loyal:
+      70
+    case .nerd:
+      70
+    case .sarcastic:
+      30
+    case .bossy:
+      70
     }
   }
 }
