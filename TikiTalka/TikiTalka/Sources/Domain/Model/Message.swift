@@ -85,11 +85,11 @@ extension Message {
       timestamp: Calendar.current.date(byAdding: .minute, value: 2, to: Date())!),
     Message(
       isUser: true,
-      content: "최대한 간략하게 알려주라 굿데이굿데이 굿데이굿데이 굿데이굿데이",
+      content: "최대한 간략하게 알려주라 굿데이굿데이 굿데이굿데이 굿데이굿데이 굿데이굿데이 굿데이굿데이 굿데이굿데이",
       timestamp: Calendar.current.date(byAdding: .minute, value: 2, to: Date())!),
     Message(
       isUser: false,
-      content: "물론이죠! 오늘은 맑고 따뜻한 날씨입니다.",
+      content: "물론이죠! 오늘은 맑고 따뜻한 날씨입니다. 물론이죠! 오늘은 맑고 따뜻한 날씨입니다. 물론이죠! 오늘은 맑고 따뜻한 날씨입니다.",
       timestamp: Calendar.current.date(byAdding: .minute, value: 4, to: Date())!),
   ]
 }
