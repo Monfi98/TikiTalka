@@ -73,15 +73,12 @@ private struct GroupedMessageView: View {
   var isUser: Bool {
     groupedMessage.isUser
   }
-  var timestamp: Date {
-    groupedMessage.messages.first!.timestamp
-  }
   
   var body: some View {
     HStack(spacing: 0) {
       
       if isUser {
-        timestamp(date: timestamp)
+        timestamp(date: groupedMessage.timestamp)
       }
       
       VStack(alignment: isUser ? .trailing : .leading) {
@@ -94,7 +91,7 @@ private struct GroupedMessageView: View {
         }
       }
       
-      if !isUser { timestamp(date: timestamp) }
+      if !isUser { timestamp(date: groupedMessage.timestamp) }
     }
     .frame(maxWidth: .infinity, alignment: isUser ? .trailing : .leading)
   }
