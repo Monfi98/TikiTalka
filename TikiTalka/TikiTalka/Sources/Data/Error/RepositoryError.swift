@@ -9,23 +9,19 @@ import Foundation
 
 enum RepositoryError {
   case fetchError
-  case deleteError
-  case modelNotFound
-  case modelAlreadyExist
+  case dataNotFound
+  case dataAlreadyExist
 }
-
 
 extension RepositoryError: LocalizedError {
   var errorDescription: String? {
     switch self {
     case .fetchError:
       "Fetch error"
-    case .deleteError:
-      "Delete error"
-    case .modelNotFound:
-      "Model not found"
-    case .modelAlreadyExist:
-      "Model already exist"
+    case .dataNotFound:
+      "Data not found"
+    case .dataAlreadyExist:
+      "Data already exist"
     }
   }
 }

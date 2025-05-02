@@ -19,10 +19,10 @@ final class ChatLogDTO {
     self.messages = messages
   }
   
-  convenience init(model: ChatLog) {
+  convenience init(_ data: ChatLog) {
     self.init(
-      date: model.date,
-      messages: model.messages.map { MessageDTO($0) }
+      date: data.date,
+      messages: data.messages.map { MessageDTO($0) }
     )
   }
 }

@@ -22,12 +22,12 @@ final class MessageDTO {
     self.timestamp = timestamp
   }
   
-  convenience init(_ model: Message) {
+  convenience init(_ data: Message) {
     self.init(
-      id: model.id,
-      isUser: model.isUser,
-      content: model.content,
-      timestamp: model.timestamp
+      id: data.id,
+      isUser: data.isUser,
+      content: data.content,
+      timestamp: data.timestamp
     )
   }
 }
