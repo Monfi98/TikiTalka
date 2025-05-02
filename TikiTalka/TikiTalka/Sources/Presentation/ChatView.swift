@@ -148,7 +148,7 @@ private struct GroupedMessageView: View {
   // MARK: 채팅 옆 시간 표시
   @ViewBuilder
   private func timestamp(date: Date) -> some View {
-    Text(date.formatted(style: .ampm))
+    Text(date.formattedString(style: .ampm))
           .font(.pretendard(size: 12, weight: .regular))
           .foregroundStyle(.gray)
           .frame(maxHeight: .infinity, alignment: .bottom)
