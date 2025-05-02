@@ -1,19 +1,12 @@
 //
-//  PersonaType.swift
+//  PersonaType+.swift
 //  TikiTalka
 //
-//  Created by 신승재 on 4/28/25.
+//  Created by 신승재 on 5/2/25.
 //
 
 import Foundation
 import SwiftUI
-
-enum PersonaType: CaseIterable {
-  case loyal     // 1. 충성형
-  case nerd      // 2. 너드형
-  case sarcastic // 3. 비꼬기형
-  case bossy     // 4. 꼰대형
-}
 
 extension PersonaType {
   var name: String {

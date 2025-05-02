@@ -110,15 +110,12 @@ private struct GroupedMessageView: View {
   var body: some View {
     HStack(spacing: 0) {
       
-      if isUser {
-        timestamp(date: groupedMessage.timestamp)
-      }
+      if isUser { timestamp(date: groupedMessage.timestamp) }
       
       VStack(alignment: isUser ? .trailing : .leading, spacing: 8) {
         ForEach(groupedMessage.messages) { message in
           HStack(alignment: .top, spacing: 0) {
             if !isUser { profileImage() }
-            
             bubble(text: message.content)
           }
         }
