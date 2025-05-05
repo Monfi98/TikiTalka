@@ -66,14 +66,23 @@ struct AlanRouter {
          .plainStreamingQuestion(let text),
          .sseStreamingQuestion(let text):
       return [URLQueryItem(name: "content", value: text), clientQueryItem]
-    case .resetState:
-      return [clientQueryItem]
-    case .summaryYoutube:
+    default:
       return nil
     }
   }
   
-  func asURLRequest() throws -> URLRequest {
+  private var body: Data? {
+    switch api {
+    case .resetState:
+      let params = ["client_id": Bundle.ALAN_API_KEY]
+      return try? JSONSerialization.data(withJSONObject: params)
+      
+    default:
+      return nil
+    }
+  }
+  
+  func asURLRequest() -> URLRequest {
     var components = URLComponents(
       url: baseURL.appendingPathComponent(path),
       resolvingAgainstBaseURL: false
@@ -82,7 +91,9 @@ struct AlanRouter {
     
     var request = URLRequest(url: components.url!)
     request.httpMethod = method
+    request.httpBody = body
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
     return request
   }
 }
