@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ChatView: View {
   
-  private var currentPersona: PersonaType = .loyal
+  @AppStorage("PersonaType") private var currentPersona: PersonaType = .loyal
+  @Environment(\.dismiss) private var dismiss
   @State private var input: String = ""
   
   var body: some View {
@@ -22,7 +23,7 @@ struct ChatView: View {
     .toolbar {
       ToolbarItem(placement: .topBarLeading) {
         Button {
-          print("tapped")
+          self.dismiss()
         } label: {
           Image(systemName: "chevron.left")
             .fontWeight(.semibold)

@@ -8,45 +8,46 @@
 import SwiftUI
 
 struct HomeSelectView: View {
-  @State private var currentPersona: PersonaType = .loyal
+  @AppStorage("PersonaType") private var currentPersona: PersonaType = .loyal
   
   var body: some View {
-    ZStack(alignment: .top) {
-      
-      currentPersona.faceImage
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 390)
-        .rotationEffect(.degrees(-20.2))
-        .padding(.top, currentPersona.topPadding)
-        .offset(x: 21)
-      
-      VStack {
-        Text(currentPersona.name)
-          .foregroundStyle(.textWhite)
-          .font(.pretendard(size: 40, weight: .bold))
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .padding(.leading, 24)
+    NavigationStack {
+      ZStack(alignment: .top) {
         
-        SlideContentView(currentPersona: $currentPersona)
+        currentPersona.faceImage
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 390)
+          .rotationEffect(.degrees(-20.2))
+          .padding(.top, currentPersona.topPadding)
+          .offset(x: 21)
         
-        pageIndicator()
-          .padding(.bottom, 43)
-        
-        Button {
+        VStack {
+          Text(currentPersona.name)
+            .foregroundStyle(.textWhite)
+            .font(.pretendard(size: 40, weight: .bold))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 24)
           
-        } label: {
-          Text("시작하기")
-            .padding(.horizontal, 70)
-            .padding(.vertical, 15)
-            .background(.buttonWhiteOpacity)
-            .clipShape(Capsule())
-            .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 8)
-        }
-      }.padding(.bottom, 70)
+          SlideContentView(currentPersona: $currentPersona)
+          
+          pageIndicator()
+            .padding(.bottom, 43)
+          
+          NavigationLink(destination: ChatView()) {
+            Text("시작하기")
+              .foregroundStyle(.textWhite)
+              .padding(.horizontal, 70)
+              .padding(.vertical, 15)
+              .background(.buttonWhiteOpacity)
+              .clipShape(Capsule())
+              .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 8)
+          }
+        }.padding(.bottom, 70)
+      }
+      .background(currentPersona.mainColor)
+      .animation(.easeInOut(duration: 0.25), value: currentPersona)
     }
-    .background(currentPersona.mainColor)
-    .animation(.easeInOut(duration: 0.25), value: currentPersona)
   }
   
   @ViewBuilder

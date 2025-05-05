@@ -12,13 +12,13 @@ extension PersonaType {
   var name: String {
     switch self {
     case .loyal:
-      "충성형"
+      "껄렁이"
     case .nerd:
-      "너드형"
+      "소심이"
     case .sarcastic:
-      "비꼬기형"
+      "비꼼이"
     case .bossy:
-      "꼰대형"
+      "고집이"
     }
   }
   
