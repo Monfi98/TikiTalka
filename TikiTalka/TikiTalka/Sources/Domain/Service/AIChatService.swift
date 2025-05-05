@@ -8,6 +8,6 @@
 import Foundation
 
 protocol AIChatService {
-  func sendMessage(_ message: String) async throws -> String
+  func question(_ message: String) async throws -> String
   func reset() async throws
 }

@@ -58,14 +58,15 @@ struct AlanRouter {
   }
   
   private var queryItems: [URLQueryItem]? {
-    
-    let clientQueryItem = URLQueryItem(name: "client_id", value: Bundle.ALAN_API_KEY)
-    
     switch api {
     case .question(let text),
          .plainStreamingQuestion(let text),
          .sseStreamingQuestion(let text):
-      return [URLQueryItem(name: "content", value: text), clientQueryItem]
+      let queryItems = [
+        URLQueryItem(name: "content", value: text),
+        URLQueryItem(name: "client_id", value: Bundle.ALAN_CLIENT_ID)
+      ]
+      return queryItems
     default:
       return nil
     }
@@ -74,7 +75,7 @@ struct AlanRouter {
   private var body: Data? {
     switch api {
     case .resetState:
-      let params = ["client_id": Bundle.ALAN_API_KEY]
+      let params = ["client_id": Bundle.ALAN_CLIENT_ID]
       return try? JSONSerialization.data(withJSONObject: params)
       
     default:

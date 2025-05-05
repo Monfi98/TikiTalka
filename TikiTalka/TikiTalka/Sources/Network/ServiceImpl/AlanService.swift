@@ -9,7 +9,7 @@ import Foundation
 
 final class AlanService: AIChatService {
   
-  func sendMessage(_ message: String) async throws -> String {
+  func question(_ message: String) async throws -> String {
     let request = AlanRouter(.question(message)).asURLRequest()
     let (data, response) = try await URLSession.shared.data(for: request)
     
@@ -34,6 +34,7 @@ final class AlanService: AIChatService {
     guard let httpResponse = response as? HTTPURLResponse else {
       throw URLError(.badServerResponse)
     }
+
     
     switch httpResponse.statusCode {
     case 200:
