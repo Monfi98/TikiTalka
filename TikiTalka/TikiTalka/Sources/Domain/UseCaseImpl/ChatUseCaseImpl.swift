@@ -20,7 +20,16 @@ final class ChatUseCaseImpl: ChatUseCase {
   func startGreeting(personaType: PersonaType) async throws -> Message {
     let now: Date = .now
     // 1. PersonaType에 따른 프롬프트를 넣고 AI 응답 받기
-    let reply = try await aiChatService.question(personaType.prompt)
+    let reply = try await aiChatService.question(
+      personaType.prompt 
+      +
+      """
+      너의 역할에 맞는 말투로 인사해줘, 너의 이름은 \(personaType.name)이야.
+      너는 마크다운(Markdown) 형식 없이 평문으로만 대답해야 해.
+      **굵은 글씨**, *기울임 글씨*, `코드 블록`, # 제목, - 리스트 등을 사용하지 마.  
+      응답은 항상 일반 텍스트 형식이어야 하며, 시각적인 강조 없이 말투와 문장으로 표현해줘.
+      """
+    )
     
     // 2. Message 객체 생성
     let replyMessage = Message(isUser: false, content: reply, timestamp: now)
@@ -54,5 +63,10 @@ final class ChatUseCaseImpl: ChatUseCase {
   
   func reset() async throws {
     try await aiChatService.reset()
+    try chatLogRepository.deleteAll()
+  }
+  
+  func fetchChatLogs() throws -> [ChatLog] {
+    return []
   }
 }

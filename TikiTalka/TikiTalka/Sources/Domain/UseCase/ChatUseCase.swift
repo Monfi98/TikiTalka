@@ -27,4 +27,11 @@ protocol ChatUseCase {
    ///
    /// - Throws: Alan API 오류 또는 Repository 오류 등
   func reset() async throws
+  
+  
+  /// 채팅 로그들을 불러옵니다.
+  ///
+  /// - Returns: 채팅 로그 (`ChatLog`) 배열
+  /// - Throws: Repository 오류 등
+  func fetchChatLogs() throws -> [ChatLog]
 }

@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct Constants {
+  static let loadingMessage = Message(
+    isUser: false,
+    content: "생각중 ...",
+    timestamp: .now
+  )
+}

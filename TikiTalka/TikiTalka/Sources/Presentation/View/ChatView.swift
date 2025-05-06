@@ -11,11 +11,15 @@ struct ChatView: View {
   
   @AppStorage("PersonaType") private var currentPersona: PersonaType = .loyal
   @Environment(\.dismiss) private var dismiss
+  @StateObject private var viewModel = ChatViewModel()
   @State private var input: String = ""
   
   var body: some View {
-    ZStack(alignment: .bottom) {
-      ChatScrollView(currentPersona: currentPersona)
+    VStack(spacing: 0) {
+      ChatScrollView(
+        viewModel: viewModel,
+        currentPersona: currentPersona
+      )
       messageInput()
     }
     .background(.backgroundNormal)
@@ -33,13 +37,19 @@ struct ChatView: View {
       
       ToolbarItem(placement: .topBarTrailing) {
         Button {
-          print("tapped")
+          viewModel.send(.initialize)
         } label: {
           Text("초기화")
             .font(.pretendard(size: 17, weight: .regular))
             .foregroundStyle(.textRed)
         }
       }
+    }
+    .onChange(of: viewModel.shouldDismiss) {
+      if $1 { self.dismiss() }
+    }
+    .onAppear {
+      viewModel.send(.greeting(currentPersona))
     }
   }
   
@@ -58,16 +68,20 @@ struct ChatView: View {
             .stroke(currentPersona.mainColor, lineWidth: 1.5)
         }
       Button {
-        print("tapped")
+        viewModel.send(.sendMessage(input))
+        self.input = ""
       } label: {
-        Image(systemName: "arrow.up")
+        Image(systemName: viewModel.isAIThinking ?  "square.fill" : "arrow.up")
           .foregroundStyle(.textWhite)
           .frame(width: 35, height: 35)
           .background {
             Circle()
               .fill(currentPersona.mainColor)
+              .opacity(viewModel.isAIThinking ? 0.5 : 1.0)
           }
       }
+      .animation(.easeInOut(duration: 0.1), value: viewModel.isAIThinking)
+      .disabled(viewModel.isAIThinking)
     }
     .padding(.vertical, 8)
     .padding(.horizontal, 16)
@@ -78,23 +92,34 @@ struct ChatView: View {
 // MARK: - ChatScrollView
 private struct ChatScrollView: View {
   
-  @State private var messages = Message.dummyMessages.grouped
+  @ObservedObject var viewModel: ChatViewModel
   let currentPersona: PersonaType
+  private var groupedMessages: [GroupedMessage] {
+    viewModel.messages.grouped
+  }
+  private let bottomID = UUID()
   
   var body: some View {
     ScrollViewReader { proxy in
       ScrollView {
         VStack(spacing: 16) {
-          ForEach(messages) { groupedMessage in
+          ForEach(groupedMessages) { groupedMessage in
             GroupedMessageView(
               currentPersona: currentPersona,
               groupedMessage: groupedMessage
             )
           }
+          Color.clear.id(bottomID)
         }.padding(.top, 16)
       }
+      .scrollIndicators(.never)
       .frame(maxWidth: .infinity)
       .padding(.horizontal, 16)
+      .onChange(of: groupedMessages) { _, _ in
+        withAnimation {
+          proxy.scrollTo(bottomID, anchor: .bottom)
+        }
+      }
     }
   }
 }

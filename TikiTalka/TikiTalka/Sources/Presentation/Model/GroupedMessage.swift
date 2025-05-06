@@ -7,11 +7,17 @@
 
 import Foundation
 
-struct GroupedMessage: Identifiable {
+struct GroupedMessage: Identifiable, Equatable {
   let id = UUID()
   let isUser: Bool
   let timestamp: Date
   let messages: [Message]
+
+  static func == (lhs: GroupedMessage, rhs: GroupedMessage) -> Bool {
+    lhs.isUser == rhs.isUser &&
+    lhs.timestamp == rhs.timestamp &&
+    lhs.messages == rhs.messages
+  }
 }
 
 

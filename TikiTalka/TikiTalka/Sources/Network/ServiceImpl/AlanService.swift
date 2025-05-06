@@ -19,7 +19,8 @@ final class AlanService: AIChatService {
     
     switch httpResponse.statusCode {
     case 200:
-      return try JSONDecoder().decode(String.self, from: data)
+      let response = try JSONDecoder().decode(AlanResponse.self, from: data)
+      return response.content
     case 422:
       throw AlanAPIError.validationError
     default:
